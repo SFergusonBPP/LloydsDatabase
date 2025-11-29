@@ -1,18 +1,21 @@
 {
-  "name": "MariaDB Development",
+  "name": "MariaDB + Java Development",
   "dockerComposeFile": "docker-compose.yml",
   "service": "app",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
   "features": {
-      "ghcr.io/devcontainers/features/node:1": {}
+    "ghcr.io/devcontainers/features/node:1": {},
+    "ghcr.io/devcontainers/features/java:1": {
+      "version": "25"
+    }
   },
   "customizations": {
-      "vscode": {
-          "extensions": [
-            "cweijan.vscode-database-client2",
-            "ms-vsliveshare.vsliveshare"
-          ]
-      }
+    "vscode": {
+      "extensions": [
+        "cweijan.vscode-database-client2",
+        "ms-vsliveshare.vsliveshare",
+        "vscjava.vscode-java-pack"
+      ]
+    }
   }
-
 }

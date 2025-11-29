@@ -1,42 +1,113 @@
-[Intro](./README.md) | [Tasks](./Tasks.md) | [SQL Basics](./sqlbasics.md)
+[Intro](./README.md) | [Getting Started](./Getting%20Started.md) | [Tasks Wk1](./TasksWk1.md) | [Tasks Wk2](./TasksWk2.md) | [SQL Basics](./sqlbasics.md)
 
-# SQL Basics
-Lesson: Basic SQL - SELECT Statements, Primary Keys & Joins
----------------------------------------------------------
+# SQL Quick Reference Guide
 
-### 1. Introduction to SQL Basics and Key Concepts
+## Keys
+- **Primary Key** → Unique identifier for each row (no duplicates, no NULLs).
+- **Foreign Key** → Column that points to a primary key in another table (enforces relationships).
 
-SQL (Structured Query Language) is a powerful language for managing and querying relational databases. let's look at the basic syntax and key concepts of SQL necessary for working with a relational database like the one described in the initial question.
+---
 
-### 1.1 Introduction to SELECT Statements
+## SELECT Statements
+- **Basic form**: retrieve specific columns from a table.
+    ```sql
+    SELECT column1, column2
+    FROM table_name;
+    ```
+- **WHERE** → filter rows.
+- **ORDER BY** → sort results.
+- **LIMIT** → restrict number of rows.
+- **GROUP BY** → group rows + aggregates (COUNT, SUM, AVG).
+- **HAVING** → filter groups.
 
-A **SELECT** statement is used to retrieve data from a table. It consists of the following parts:
+---
 
-1. **Table Name**: The name of the table we want to retrieve data from, e.g., Employees, Stock.
-2. **Column List**: A comma-separated list of column names in the selected row(s).
-3. **WHERE Clause** (optional): Filters applied to rows retrieved by the query. For example: "SELECT EmployeeID, FirstName FROM Employees WHERE FirstName LIKE 'J%'" would retrieve all employees with a first name starting with the letter J.
-4. **ORDER BY Clause** (optional): Sorts the result set in ascending order based on the column specified.
-5. **LIMIT Clause** (optional): Limits the number of rows returned by the query.
-6. **GROUP BY Clause** (optional): Groups data by one or more columns and calculates aggregates like SUM, AVG, MAX, MIN.
-7. **HAVING Clause** (optional): Filters groups based on aggregate functions.
-8. **JOIN Clause**: Connects two or more tables based on a common column(s). For example, to join the Employees and Sales tables, you'd use a JOIN like this: "SELECT e.EmployeeID, s.SaleDate FROM Employees AS e JOIN Sales AS s ON e.EmployeeID = s.EmployeeID".
+## CASE (Conditional Logic)
+- **Purpose**: Adds conditional labels inside queries.
+- **Example**:
+    ```sql
+    SELECT OrderID,
+       CASE 
+         WHEN TotalAmount < 50 THEN 'Low'
+         WHEN TotalAmount < 200 THEN 'Medium'
+         ELSE 'High'
+       END AS OrderCategory
+    FROM Orders;
+    ```
+- **Placement**: Often used after GROUP BY/HAVING to categorise or label results.
+- **Example use**: categorising orders as 'Low', 'Medium', 'High'.
 
-### 1.2 Introduction to Primary Keys
+---
 
-A **primary key** is a unique identifier for each row in a table (e.g., EmployeeID in the Employees table). A primary key constraint ensures that no two rows in a table have the same value. This constraint also prevents NULL values from being entered, as NULL values are not unique.
+## Joins
+- **Purpose**: Combine data across tables using keys.
+- **Example**:
+    ```sql
+    SELECT c.Name, o.OrderDate
+    FROM Customers c
+    INNER JOIN Orders o
+    ON c.CustomerID = o.CustomerID;
+    ```
+- **Types**:
+  - **INNER JOIN** → Only matching rows.
+  - **LEFT JOIN** → All left rows + matches from right.
+  - **RIGHT JOIN** → All right rows + matches from left.
+  - **FULL JOIN** → All rows from both, NULLs where no match.
 
-### 1.3 Introduction to Foreign Keys
+**Pitfalls**:
+- Forgetting join condition → Cartesian product (every row combined with every other).
+- Wrong join type → missing or extra data.
+- Performance → index join columns.
 
-A **foreign key** is a column(s) in one table that refers to the primary key of another table (e.g., EmployeeID in Sales table referring to EmployeeID in Employees table). This constraint ensures that data entered into the foreign key column(s) must exist in the referenced primary key column(s), and prevents deletion or insertion of invalid data.
+---
 
-### 1.4 Introduction to Joins - I (1-to-1 relationship)
+## Stored Procedures
+- **Definition**: Precompiled SQL routines stored in the database.
+- **Benefits**:
+  - Reusability → write once, run many times.
+  - Security → restrict direct table access.
+  - Performance → faster execution.
+  - Maintainability → centralised business logic.
+- **Common Issues**: missing parameters, inefficient logic, version control problems.
 
-A **join** is a way to combine two or more tables based on common values in one or more columns, creating a new table with all possible combinations of rows from the original tables. The most basic join type is a 1-to-1 relationship, where each row in either table can be matched to exactly one row in the other table.
+---
 
-### 1.5 Introduction to Joins - II (Many-to-One relationship)
+## Functions
+- **Definition**: Routines that return a single value.
+- **Differences from procedures**: must return a value, can be used inside SQL statements.
+- **Common Issues**: return type mismatches, slow performance with complex logic, side effects (shouldn’t modify data).
 
-A **many-to-one** relationship exists when a record in one table is related to multiple records in another table, and vice versa. In this case, you would join the tables on a column(s) that represents the relationship between them (e.g., EmployeeID and ClientID in the Sales table).
+---
 
-### 1.6 Introduction to Joins - III (Many-to-Many relationship)
+## Views
+- **Definition**: Virtual tables based on SELECT queries.
+- **Characteristics**:
+  - Virtual (no physical storage).
+  - Dynamic (always reflects current data).
+  - Can be read‑only or updatable.
+- **Benefits**: simplify queries, restrict access, provide consistent interface.
+- **Common Issues**: dependency on base tables, performance overheads, updatability limits.
 
-A **many-to-many** relationship exists when a record in one table is related to multiple records in another table, but vice versa, and each record may be related to many other records. In this case, you would join the tables on a column(s) that represents the relationship between them (e.g., EmployeeID and SupplierID in the Sales table).
+---
+
+## Indexing
+- **Definition**: Database object that speeds up data retrieval.
+- **How it works**: like a book index; often uses B‑Tree structure.
+- **Types**: single‑column, composite, unique, full‑text.
+- **Benefits**: faster queries, reduced I/O, enforce uniqueness.
+- **Best Practices**:
+  - Use on WHERE/JOIN/ORDER BY columns.
+  - Avoid low‑selectivity columns.
+  - Regularly review and optimise.
+- **Common Issues**: over‑indexing slows writes, fragmentation, maintenance overhead.
+- **Maintenance**: monitor usage, rebuild/reorganise fragmented indexes, drop unused ones.
+
+---
+
+## Key Takeaways
+- Use **primary/foreign keys** to link tables.
+- **SELECT** is the foundation; clauses refine results.
+- **CASE** adds flexible logic.
+- **Joins** unlock multi‑table queries — choose the right type.
+- **Stored procedures/functions/views** → encapsulate, simplify, and secure logic.
+- **Indexes** → optimise performance, but must be managed carefully.

@@ -3,5 +3,6 @@
 
 ## Contents
 1. [Getting Started - Setting up your environments](./Getting%20Started.md)     
-2. [Tasks to complete ](./Tasks.md)
+2. [Tasks to complete ](./TasksWk1.md)
+2. [Tasks to complete ](./TasksWk2.md)
 3. [SQL Basics](./sqlbasics.md) 
