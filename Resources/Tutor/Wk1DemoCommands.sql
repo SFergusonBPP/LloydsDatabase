@@ -15,7 +15,7 @@ WHERE CustomerID = 2;
 
 -- DELETE: Remove a customer
 DELETE FROM Customers
-WHERE CustomerID = 3;
+WHERE CustomerID = 5;
 
 -- INNER JOIN: Customers with orders
 SELECT c.FirstName, c.LastName, o.OrderID
@@ -39,7 +39,7 @@ RIGHT JOIN Orders o
 -- (Note: Some SQL engines require UNION of LEFT + RIGHT instead of FULL JOIN)
 SELECT c.FirstName, c.LastName, o.OrderID
 FROM Customers c
-FULL JOIN Orders o
+CROSS JOIN Orders o
     ON c.CustomerID = o.CustomerID;
 
 -- CASE: Categorise orders by amount

@@ -72,17 +72,17 @@ INSERT INTO jobs (job_title, min_salary, max_salary) VALUES
 
 -- Insert Employees
 INSERT INTO employees (first_name, last_name, salary, department_id, job_id, hire_date) VALUES
-('Alice', 'Smith', 55000, 10, 100, DATE_SUB(CURDATE(), INTERVAL 15 YEAR + INTERVAL 5 MONTH)),
+('Alice', 'Smith', 55000, 10, 100, DATE_SUB(CURDATE(), INTERVAL '15-5' YEAR_MONTH)),
 ('George', 'White', 72000, 12, 102, DATE_SUB(CURDATE(), INTERVAL 14 YEAR)),
-('Jack', 'Wilson', 52000, 11, 107, DATE_SUB(CURDATE(), INTERVAL 12 YEAR + INTERVAL 6 MONTH)),
+('Jack', 'Wilson', 52000, 11, 107, DATE_SUB(CURDATE(), INTERVAL '12-6' YEAR_MONTH)),
 ('Diana', 'Prince', 62000, 12, 102, DATE_SUB(CURDATE(), INTERVAL 10 YEAR)),
-('Charlie', 'Brown', 48000, 11, 105, DATE_SUB(CURDATE(), INTERVAL 8 YEAR + INTERVAL 3 MONTH)),
-('Hannah', 'Black', 41000, 11, 105, DATE_SUB(CURDATE(), INTERVAL 6 YEAR + INTERVAL 9 MONTH)),
+('Charlie', 'Brown', 48000, 11, 105, DATE_SUB(CURDATE(), INTERVAL '8-3' YEAR_MONTH)),
+('Hannah', 'Black', 41000, 11, 105, DATE_SUB(CURDATE(), INTERVAL '6-9' YEAR_MONTH)),
 ('Karen', 'Davies', 45000, 12, 108, DATE_SUB(CURDATE(), INTERVAL 5 YEAR)),
-('Ethan', 'Hunt', 35000, 12, 103, DATE_SUB(CURDATE(), INTERVAL 3 YEAR + INTERVAL 6 MONTH)),
-('Bob', 'Jones', 27000, 10, 101, DATE_SUB(CURDATE(), INTERVAL 2 YEAR + INTERVAL 9 MONTH)),
+('Ethan', 'Hunt', 35000, 12, 103, DATE_SUB(CURDATE(), INTERVAL '3-6' YEAR_MONTH)),
+('Bob', 'Jones', 27000, 10, 101, DATE_SUB(CURDATE(), INTERVAL '2-9' YEAR_MONTH)),
 ('Fiona', 'Green', 29000, 13, 104, DATE_SUB(CURDATE(), INTERVAL 2 YEAR)),
-('Liam', 'Evans', 28000, 10, 109, DATE_SUB(CURDATE(), INTERVAL 1 YEAR + INTERVAL 3 MONTH)),
+('Liam', 'Evans', 28000, 10, 109, DATE_SUB(CURDATE(), INTERVAL '1-3' YEAR_MONTH)),
 ('Isla', 'Taylor', 31000, 13, 106, DATE_SUB(CURDATE(), INTERVAL 9 MONTH)),
 ('Maya', 'Patel', 64000, 12, 110, DATE_SUB(CURDATE(), INTERVAL 4 MONTH));
 
@@ -101,21 +101,17 @@ INSERT INTO employee_projects (employee_id, project_id, role) VALUES
 (1000, 200, 'HR Manager'),
 (1001, 200, 'Recruiter'),
 (1011, 200, 'Coordinator'),
-
 -- Finance Department: Annual Budget Review
 (1002, 201, 'Finance Analyst'),
 (1007, 201, 'Finance Analyst'),
 (1009, 201, 'Lead'),
-
 -- IT Department: System Upgrade
 (1003, 202, 'Software Engineer'),
 (1004, 202, 'Database Administrator'),
 (1006, 202, 'Software Engineer'),
-
 -- Sales Department: Client Outreach
-(1005, 203, 'Sales Executive')
-(1008, 200, 'Assistant')
-
+(1005, 203, 'Sales Executive'),
+(1008, 200, 'Assistant'),
 -- IT Department: Database Migration
 (1010, 205, 'Specialist'),
 (1012, 205, 'Senior Architect');
