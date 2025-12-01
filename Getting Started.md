@@ -25,4 +25,4 @@ Setting up the connection is very simple. After you click the Database option, s
 
 ### Next Steps
 
-- ([Tasks](./Tasks.md))
+- ([Tasks Wk1](./TasksWk1.md) | [Tasks Wk2](./TasksWk2.md))
