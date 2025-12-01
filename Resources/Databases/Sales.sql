@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS Salesman (
     name VARCHAR(25) NOT NULL,
     city VARCHAR(25),
     commission DECIMAL(8,2)
-) AUTO_INCREMENT = 21;
+) AUTO_INCREMENT=21;
 
 -- Customer table
 CREATE TABLE IF NOT EXISTS Customer (
@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS Customer (
     customer_name VARCHAR(40) NOT NULL,
     city VARCHAR(30),
     grade INT
-) AUTO_INCREMENT = 101;
+) AUTO_INCREMENT=101;
 
 -- Orders table
 CREATE TABLE IF NOT EXISTS Orders (
@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS Orders (
     quantity INT,
     ord_date DATE NOT NULL,
     customer_id INT,
-    salesman_id INT,
+    salesman_id INT NULL,
     CONSTRAINT fk_customer FOREIGN KEY (customer_id)
         REFERENCES Customer(customer_id)
         ON DELETE CASCADE
