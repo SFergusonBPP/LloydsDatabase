@@ -111,7 +111,7 @@ INSERT INTO employee_projects (employee_id, project_id, role) VALUES
 (1006, 202, 'Software Engineer'),
 -- Sales Department: Client Outreach
 (1005, 203, 'Sales Executive'),
-(1008, 200, 'Assistant'),
+(1008, 203, 'Assistant'),
 -- IT Department: Database Migration
-(1010, 205, 'Specialist'),
-(1012, 205, 'Senior Architect');
+(1010, 204, 'Specialist'),
+(1012, 204, 'Senior Architect');
