@@ -73,15 +73,15 @@ GROUP BY c.customer_name;
    Activity 3 – Stock DB
    GROUP BY Exploration
    =========================== */
-USE Stock;
+USE stock;
 
 -- Task: Total and average quantity ordered per product.
 -- Reason: LEFT JOIN keeps products with no orders; COALESCE replaces NULL with 0.
 SELECT p.product_description,
        COALESCE(SUM(od.quantity), 0) AS total_quantity,
        COALESCE(AVG(od.quantity), 0) AS avg_quantity
-FROM Products p
-LEFT JOIN Order_Details od
+FROM products p
+LEFT JOIN order_details od
   ON p.product_number = od.product_number
 GROUP BY p.product_description;
 
@@ -90,8 +90,8 @@ GROUP BY p.product_description;
 SELECT p.product_description,
        COALESCE(SUM(od.quantity), 0) AS total_quantity,
        COALESCE(SUM(od.quantity * p.price), 0) AS total_sales_value
-FROM Products p
-LEFT JOIN Order_Details od
+FROM products p
+left JOIN order_details od
   ON p.product_number = od.product_number
 GROUP BY p.product_description;
 
@@ -100,8 +100,8 @@ GROUP BY p.product_description;
 SELECT p.category,
        COALESCE(SUM(od.quantity), 0) AS total_quantity,
        COALESCE(AVG(od.quantity), 0) AS avg_quantity_per_product
-FROM Products p
-LEFT JOIN Order_Details od
+FROM products p
+LEFT JOIN order_details od
   ON p.product_number = od.product_number
 GROUP BY p.category;
 
@@ -110,7 +110,7 @@ GROUP BY p.category;
    Activity 4 – HR DB
    CASE Statement Challenge
    =========================== */
-USE HR;
+USE hr;
 
 -- Task: Classify employees into salary bands.
 -- Reason: CASE ordered from highest to lowest ensures correct classification.
@@ -120,8 +120,8 @@ SELECT e.first_name, e.last_name, d.department_name, e.salary,
          WHEN e.salary BETWEEN 30000 AND 50000 THEN 'Medium'
          ELSE 'Low'
        END AS SalaryBand
-FROM Employees e
-LEFT JOIN Departments d
+FROM employees e
+LEFT JOIN departments d
   ON e.department_id = d.department_id;
 
 -- Extension Task 1: Classify Employees by Hire Date.
@@ -132,7 +132,7 @@ SELECT e.first_name, e.last_name, e.hire_date,
          WHEN e.hire_date >= DATE_SUB(CURDATE(), INTERVAL 10 YEAR) THEN 'MidTenure'
          ELSE 'Veteran'
        END AS TenureCategory
-FROM Employees e;
+FROM employees e;
 
 -- Extension Task 2: Categorise Project Roles.
 -- Reason: CASE maps roles into categories; LEFT JOIN ensures employees with no projects still appear.
@@ -143,8 +143,8 @@ SELECT e.first_name, e.last_name, ep.role,
          WHEN ep.role IN ('Recruiter','Software Engineer','Sales Executive','Assistant') THEN 'Contributor'
          ELSE 'Unclassified'
        END AS RoleCategory
-FROM Employees e
-LEFT JOIN Employee_Projects ep
+FROM employees e
+LEFT JOIN employee_projects ep
   ON e.employee_id = ep.employee_id;
 
 
@@ -152,15 +152,15 @@ LEFT JOIN Employee_Projects ep
    Activity 5 – HR DB
    Error Detection & Corrections
    =========================== */
-USE HR;
+USE hr;
 
 -- Query 1
 -- Original: SELECT * FROM departments, employees;
 -- Error: Cartesian product (no join condition).
 -- Correction: Add explicit JOIN on department_id.
 SELECT * 
-FROM Departments d
-JOIN Employees e
+FROM departments d
+JOIN employees e
   ON d.department_id = e.department_id;
 
 -- Query 2
@@ -168,8 +168,8 @@ JOIN Employees e
 -- Error: Jobs table does not contain salary.
 -- Correction: Join Jobs to Employees and aggregate salary by job_title.
 SELECT j.job_title, SUM(e.salary) AS total_salary
-FROM Jobs j
-JOIN Employees e
+FROM jobs j
+JOIN employees e
   ON j.job_id = e.job_id
 GROUP BY j.job_title;
 
@@ -178,7 +178,7 @@ GROUP BY j.job_title;
 -- Error: Missing GROUP BY with COUNT and department_name.
 -- Correction: Add GROUP BY department_name.
 SELECT department_name, COUNT(*) AS dept_count
-FROM Departments
+FROM departments
 WHERE location = 'London'
 GROUP BY department_name;
 
@@ -191,12 +191,12 @@ SELECT first_name,
          WHEN salary < 30000 THEN 'Low'
          ELSE 'Medium'
        END AS SalaryLevel
-FROM Employees;
+FROM employees;
 
 -- Query 5
 -- Original: RIGHT JOIN excludes projects with no employees.
 -- Correction: Use LEFT JOIN so all projects appear, even if no employees are assigned.
 SELECT p.project_name, ep.role
-FROM Projects p
-LEFT JOIN Employee_Projects ep
+FROM projects p
+LEFT JOIN employee_projects ep
   ON p.project_id = ep.project_id;

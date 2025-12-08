@@ -16,6 +16,8 @@ The SQL scripts for each database are located in **Resources > Databases**.
 - **HR.sql** → Run this script to create and populate the **HR** database.  
   - Required for **Activity 5** (Views and Functions with Employees).
 
+- All the databases will be used in the **General Practice** section
+
 ⚠️ **Important:**  
 - Run each script only once to set up the databases.  
 - Switch to the correct database before starting each activity using `USE Sales;`, `USE Stock;`, or `USE HR;`.  
@@ -510,7 +512,7 @@ Practice creating and utilizing views and functions in the HR database to suppor
 
 ### Task 6: Optimise with Composite Index  
 - **Use Sales database**  
-- Create a composite index on `Orders(customer_id, order_date)`.  
+- Create a composite index on `Orders(customer_id, ord_date)`.  
 - Test queries that filter by both customer and date.  
 - Purpose: explore advanced indexing strategies and performance trade‑offs.  
 
@@ -523,29 +525,36 @@ Practice creating and utilizing views and functions in the HR database to suppor
 
 #### Problem Queries to Fix
 1. ```sql
+   USE stock; 
    CALL get_orders();
    ```
 2. ```sql
+   use hr;
    CREATE FUNCTION total_salary(emp_id INT) RETURNS VARCHAR(50)
    BEGIN
       DECLARE result DECIMAL(10,2);
-      SELECT SUM(salary) INTO result FROM Employees WHERE employee_id = emp_id;
+      SELECT SUM(amount) INTO result FROM Payroll WHERE employee_id = emp_id;
       RETURN result;
    END;
+   select *, total_salary(e.employee_id) as total_paid
+   from employees e;
    ```
 3. ```sql
-   CREATE VIEW high_earners AS
-   SELECT employee_id, full_name, salary
+   use hr;
+   CREATE VIEW top_earners AS
+   SELECT employee_id, first_name, last_name, salary
    FROM Staff;
    ```
 4. ```sql
+   use hr;
    CREATE INDEX idx_salary
    ON Employees(salary);
    ```
 5. ```sql
+   use stock;
    CREATE INDEX idx_customer_id ON Orders(customer_id);
    CREATE INDEX idx_order_date ON Orders(order_date);
-   CREATE INDEX idx_amount ON Orders(order_amount);
+   CREATE INDEX idx_amount ON Orders(order_id);
    ```
 ### Task 8: Capstone Challenge  
 - **Use Sales database**  

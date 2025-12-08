@@ -38,7 +38,7 @@
    Activity 3 – Stock DB
    GROUP BY Exploration
    =========================== */
--- USE Stock;
+-- USE stock;
 
 -- Task: Total and average quantity ordered per product.
 
@@ -51,7 +51,7 @@
    Activity 4 – HR DB
    CASE Statement Challenge
    =========================== */
--- USE HR;
+-- USE hr;
 
 -- Task: Classify employees into salary bands.
 
@@ -64,7 +64,7 @@
    Activity 5 – HR DB
    Error Detection
    =========================== */
--- USE HR;
+-- USE hr;
 
 -- Query 1 (Broken):
 -- SELECT * FROM departments, employees;

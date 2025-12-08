@@ -82,6 +82,8 @@ SELECT * FROM Customers WHERE LastName = 'Johnington' AND FirstName = 'John';
 -- This will fail if a duplicate ContactNumber is inserted
 INSERT INTO Customers (CustomerID, FirstName, LastName, City, TotalPurchases, ContactNumber)
 VALUES (7, 'Test', 'Duplicate', 'London', 100.00, '01234 112233');
+INSERT INTO Customers (CustomerID, FirstName, LastName, City, TotalPurchases, ContactNumber)
+VALUES (8, 'Test', 'Duplicate', 'London', 100.00, '01234 112233');
 
 -- Full-text search
 SELECT * FROM Sales

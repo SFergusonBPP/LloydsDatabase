@@ -22,7 +22,7 @@
    Activity 2 – Stock DB
    Comparing Procedures, Functions, and Views
    =========================== */
--- USE Stock;
+-- USE stock;
 
 -- Scenario 1: Create a View joining Orders, Order_Details, and Products.
 -- Scenario 2: Create a Function to calculate line totals (quantity * price).
@@ -36,7 +36,7 @@
    Activity 3 – Stock DB
    Implementing Indexes for Query Performance
    =========================== */
--- USE Stock;
+-- USE stock;
 
 -- Task 1: Run a baseline query to retrieve products by category (no index).
 -- Task 2: Create an index on the category column in Products.
@@ -63,7 +63,7 @@
    Activity 5 – HR DB
    Hands-on Exercise with Views and Functions
    =========================== */
--- USE HR;
+-- USE hr;
 
 -- Task 1: Create a view concatenating employee first_name and last_name as full_name.
 -- Task 2: Write a function to return total payroll payments for an employee.
@@ -85,9 +85,11 @@
 -- Task 7 – HR DB: Diagnose and fix the following problem queries:
 
 -- Problem Query 1:
+-- use stock;
 -- CALL get_orders();
 
 -- Problem Query 2:
+-- use hr;
 -- CREATE FUNCTION total_salary(emp_id INT) RETURNS VARCHAR(50)
 -- BEGIN
 --    DECLARE result DECIMAL(10,2);
@@ -96,15 +98,18 @@
 -- END;
 
 -- Problem Query 3:
--- CREATE VIEW high_earners AS
+-- use hr;
+-- CREATE VIEW top_earners AS
 -- SELECT employee_id, full_name, salary
 -- FROM Staff;
 
 -- Problem Query 4:
+-- use hr;
 -- CREATE INDEX idx_salary
 -- ON Employees(salary);
 
 -- Problem Query 5:
+-- use stock;
 -- CREATE INDEX idx_customer_id ON Orders(customer_id);
 -- CREATE INDEX idx_order_date ON Orders(order_date);
 -- CREATE INDEX idx_amount ON Orders(order_amount);
