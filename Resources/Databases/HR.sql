@@ -99,19 +99,69 @@ INSERT INTO projects (project_name, department_id) VALUES
 INSERT INTO employee_projects (employee_id, project_id, role) VALUES
 -- HR Department: Recruitment Drive
 (1000, 200, 'HR Manager'),
-(1001, 200, 'Recruiter'),
-(1011, 200, 'Coordinator'),
+(1008, 200, 'Recruiter'),
+(1012, 200, 'Coordinator'),
 -- Finance Department: Annual Budget Review
-(1002, 201, 'Finance Analyst'),
-(1007, 201, 'Finance Analyst'),
-(1009, 201, 'Lead'),
+(1004, 201, 'Finance Analyst'),
+(1005, 201, 'Finance Analyst'),
+(1011, 201, 'Lead'),
 -- IT Department: System Upgrade
 (1003, 202, 'Software Engineer'),
-(1004, 202, 'Database Administrator'),
-(1006, 202, 'Software Engineer'),
+(1007, 202, 'Database Administrator'),
+(1001, 202, 'Software Engineer'),
 -- Sales Department: Client Outreach
-(1005, 203, 'Sales Executive'),
-(1008, 203, 'Assistant'),
+(1009, 203, 'Sales Executive'),
+(1006, 203, 'Assistant'),
 -- IT Department: Database Migration
 (1010, 204, 'Specialist'),
-(1012, 204, 'Senior Architect');
+(1002, 204, 'Senior Architect');
+
+-- Payroll Table
+CREATE TABLE payroll (
+    payroll_id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    employee_id INT UNSIGNED NOT NULL,
+    pay_date DATE NOT NULL,
+    amount DECIMAL(10,2) NOT NULL,
+    pay_type VARCHAR(20), -- e.g. 'Salary', 'Bonus', 'Overtime'
+    CONSTRAINT fk_payroll_employee FOREIGN KEY (employee_id) REFERENCES employees(employee_id)
+) AUTO_INCREMENT = 5000;
+
+DELIMITER //
+
+DELIMITER //
+
+CREATE FUNCTION last_working_day(year INT, month INT)
+RETURNS DATE
+DETERMINISTIC
+BEGIN
+    DECLARE d DATE;
+
+    -- Get the last day of the given month
+    SET d = LAST_DAY(MAKEDATE(year, 1) + INTERVAL (month-1) MONTH);
+
+    -- Adjust if weekend
+    IF DAYOFWEEK(d) = 7 THEN
+        SET d = d - INTERVAL 1 DAY;   -- Saturday → Friday
+    ELSEIF DAYOFWEEK(d) = 1 THEN
+        SET d = d - INTERVAL 2 DAY;   -- Sunday → Friday
+    END IF;
+
+    RETURN d;
+END //
+
+DELIMITER ;
+
+INSERT INTO payroll (employee_id, pay_date, amount, pay_type)
+SELECT e.employee_id,
+       last_working_day(YEAR(CURDATE() - INTERVAL n MONTH), MONTH(CURDATE() - INTERVAL n MONTH)) AS pay_date,
+       e.salary / 12 AS amount,
+       'Salary'
+FROM employees e
+JOIN (SELECT 0 AS n UNION SELECT 1 UNION SELECT 2) months;
+INSERT INTO payroll (employee_id, pay_date, amount, pay_type)
+SELECT e.employee_id,
+       last_working_day(YEAR(CURDATE() - INTERVAL 0 MONTH), MONTH(CURDATE() - INTERVAL 0 MONTH)) AS pay_date,
+       (e.salary / 12) / 2 AS amount,
+       'Bonus'
+FROM employees e
+WHERE e.first_name IN ('Hannah','Diana','Fiona','Isla');
